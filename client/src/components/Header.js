@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Header = () => {
   const toggleTheme = () => {
@@ -16,6 +16,12 @@ const Header = () => {
       document.documentElement.classList.remove("dark");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
 
   return (
     <header className="flex justify-between items-center w-full z-[2] relative">

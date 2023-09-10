@@ -4,4 +4,9 @@
 
 * {
   font-family: "Josefin Sans", sans-serif;
+  transition: 0.3s;
+}
+
+img {
+  user-select: none;
 }

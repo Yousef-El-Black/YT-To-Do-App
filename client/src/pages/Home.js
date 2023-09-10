@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Todos from "../components/Todos";
+import axios from "axios";
 
 const Home = () => {
+  const [text, setText] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (text) {
+      try {
+        await axios.post("http://localhost:8080/api/todos/", { text });
+        window.location.reload();
+      } catch (err) {}
+    }
+  };
+
   return (
     <div className="dark:bg-veryDarkBlue bg-veryLightGray min-h-screen">
       <img
@@ -29,7 +42,10 @@ const Home = () => {
         <Header />
 
         {/* Add Todo Input */}
-        <form className="bg-veryLightGray flex items-center p-4 mt-10 mb-5 rounded-lg drop-shadow-lg shadow-lg relative z-[2] dark:bg-veryDarkDesaturatedBlue dark:text-lightGrayishBlueDark">
+        <form
+          className="bg-veryLightGray flex items-center p-4 mt-10 mb-5 rounded-lg drop-shadow-lg shadow-lg relative z-[2] dark:bg-veryDarkDesaturatedBlue dark:text-lightGrayishBlueDark"
+          onSubmit={handleSubmit}
+        >
           <button className="rounded-full bg-transparent w-8 h-8 text-[#fff] text-xl flex items-center justify-center font-extralight border-darkGrayishBlueLight border-2 duration-300 hover:bg-gradient-to-br	hover:from-checkBackground1 hover:to-checkBackground2 hover:border-none me-6">
             +
           </button>
@@ -37,6 +53,7 @@ const Home = () => {
             type="text"
             placeholder="Create a new todo..."
             className="outline-none bg-[rgba(0,0,0,0)] text-xl"
+            onChange={(e) => setText(e.target.value)}
           />
         </form>
 
